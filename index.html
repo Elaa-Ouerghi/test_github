@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord Financier</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Conteneur principal pour centrer et styliser le contenu -->
+    <div class="container">
+
+        <!-- En-tête de la page -->
+        <header>
+
+            <h1>Tableau de Bord Financier</h1>
+            <p>Suivi de mes finances personnelles</p>
+
+        </header>
+
+        <!-- Section des cartes de résumé financier -->
+        <section class="cartes-resume">
+
+            <!-- Carte 1 : Solde actuel -->
+            <div class="carte">
+
+                <h3>Solde Actuel</h3>
+                <p class="montant">0 DT</p>
+
+            </div>
+
+            <!-- Carte 2 : Total des revenus -->
+            <div class="carte">
+
+                <h3>Revenus</h3>
+                <p class="montant revenus">0 DT</p>
+
+            </div>
+
+            <!-- Carte 3 : Total des dépenses -->
+            <div class="carte">
+
+                <h3>Dépenses</h3>
+                <p class="montant depenses">0 DT</p>
+
+            </div>
+
+        </section>
+
+        <!-- Section du formulaire d'ajout de transaction -->
+        <section class="formulaire">
+
+            <h2>Ajouter une transaction</h2>
+            <form>
+
+                <input type="text" placeholder="Description">
+                <input type="number" placeholder="Montant">
+                <button type="submit">Ajouter</button>
+
+            </form>
+
+        </section>
+
+        <!-- Section de l'historique des transactions -->
+        <section class="historique">
+
+            <h2>Historique</h2>
+            <div class="transactions">
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- Lien vers le fichier JavaScript -->
+    <script src="script.js"></script>
+</body>
