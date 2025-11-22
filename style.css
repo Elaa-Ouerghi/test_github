@@ -79,3 +79,67 @@ button {
     padding: 20px;
     border-radius: 10px;
 }
+
+/* Message affiché quand il n'y a aucune transaction */
+.message-vide {
+    text-align: center;
+    color: #7f8c8d;
+    font-style: italic;
+    padding: 20px;
+}
+
+/* Layout flex pour aligner les éléments horizontalement */
+.transaction {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #ddd;
+}
+
+/* Transaction de revenu - style vert */
+.transaction.revenu {
+    border-left-color: #27ae60;
+    background: #f0fff4;
+}
+
+/* Transaction de dépense - style rouge */
+.transaction.depense {
+    border-left-color: #e74c3c;
+    background: #fff0f0;
+}
+
+/* Conteneur pour la description et la date */
+.transaction-info {
+    flex: 1;
+}
+
+/* Style pour le titre/description de la transaction */
+.transaction-info strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Style pour la date */
+.transaction-date {
+    font-size: 0.9em;
+    color: #7f8c8d;
+}
+
+/* Style de base pour tous les montants */
+.transaction-montant {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* Couleurs spécifiques selon le type */
+.transaction-montant.revenu {
+    color: #27ae60;
+}
+
+.transaction-montant.depense {
+    color: #e74c3c;
+}
