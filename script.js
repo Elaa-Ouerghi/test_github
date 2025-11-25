@@ -8,9 +8,33 @@ const state = {
     depenses: 0          
 };
 
+const STORAGE_KEY = 'dashboard-financier-data';
+
+// Charger depuis localStorage
+function chargerDonnees() {
+    const donneesSauvegardees = localStorage.getItem(STORAGE_KEY);
+    if (donneesSauvegardees) {
+        const donnees = JSON.parse(donneesSauvegardees);
+        state.transactions = donnees.transactions || [];
+        console.log(`${state.transactions.length} transactions chargées`);
+    }
+    calculerTotaux();
+}
+
+// Sauvegarder dans localStorage
+function sauvegarderDonnees() {
+    const donneesASauvegarder = {
+        transactions: state.transactions,
+        derniereSauvegarde: new Date().toISOString()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(donneesASauvegarder));
+    console.log("Données sauvegardées");
+}
+
 // INITIALISATION AU CHARGEMENT DE LA PAGE
 function init() {
     console.log("Tableau de bord initialisé");
+    chargerDonnees();
     setupEventListeners();
     afficherTransactions();
 }
@@ -56,7 +80,8 @@ function gererSoumissionFormulaire(evenement) {
 function ajouterTransaction(transaction) {
     state.transactions.push(transaction); 
     calculerTotaux();                     
-    afficherTransactions();               
+    afficherTransactions();      
+    sauvegarderDonnees();         
 }
 
 // CALCUL DES TOTAUX FINANCIERS
