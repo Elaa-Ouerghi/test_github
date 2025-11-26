@@ -143,3 +143,28 @@ button {
 .transaction-montant.depense {
     color: #e74c3c;
 }
+
+/* Style pour les boutons de suppression */
+.transaction-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-supprimer {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-supprimer:hover {
+    background: #c0392b;
+}

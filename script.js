@@ -84,6 +84,19 @@ function ajouterTransaction(transaction) {
     sauvegarderDonnees();         
 }
 
+// FONCTION POUR SUPPRIMER UNE TRANSACTION
+function supprimerTransaction(id) {
+    if (confirm("Voulez-vous vraiment supprimer cette transaction ?")) {
+        // Garde toutes les transactions SAUF celle à supprimer
+        state.transactions = state.transactions.filter(transaction => transaction.id !== id);
+        
+        // Met à jour l'affichage
+        calculerTotaux();
+        afficherTransactions();
+        sauvegarderDonnees();
+    }
+}
+
 // CALCUL DES TOTAUX FINANCIERS
 function calculerTotaux() {
     state.revenus = 0;
@@ -125,9 +138,14 @@ function afficherTransactions() {
                 <strong>${transaction.description}</strong>
                 <span class="transaction-date">${transaction.date}</span>
             </div>
+            <div class="transaction-actions">
             <span class="transaction-montant ${transaction.type}">
                 ${transaction.type === 'revenu' ? '+' : '-'}${Math.abs(transaction.montant)} DT
             </span>
+                <button class="btn-supprimer" onclick="supprimerTransaction(${transaction.id})">
+                    ×
+                </button>
+                </div>
         </div>
     `).join('');
 }
