@@ -37,6 +37,7 @@ function init() {
     chargerDonnees();
     setupEventListeners();
     afficherTransactions();
+    mettreAJourGraphique(); 
 }
 
 // Démarre l'application quand la page est prête
@@ -52,11 +53,9 @@ function setupEventListeners() {
 function gererSoumissionFormulaire(evenement) {
     evenement.preventDefault(); 
     
-    
     const description = document.querySelector('input[type="text"]').value;
     const montant = parseFloat(document.querySelector('input[type="number"]').value);
     
-
     if (!description || !montant) {
         alert("Veuillez remplir tous les champs !");
         return;
@@ -70,27 +69,22 @@ function gererSoumissionFormulaire(evenement) {
         date: new Date().toLocaleDateString('fr-FR')
     };
     
-    // Ajoute la transaction au système
     ajouterTransaction(transaction);
-    
-    //Nettoie le formulaire
     document.querySelector('form').reset();
 }
+
 // AJOUT D'UNE TRANSACTION
 function ajouterTransaction(transaction) {
     state.transactions.push(transaction); 
     calculerTotaux();                     
     afficherTransactions();      
-    sauvegarderDonnees();         
+    sauvegarderDonnees();  
 }
 
 // FONCTION POUR SUPPRIMER UNE TRANSACTION
 function supprimerTransaction(id) {
     if (confirm("Voulez-vous vraiment supprimer cette transaction ?")) {
-        // Garde toutes les transactions SAUF celle à supprimer
         state.transactions = state.transactions.filter(transaction => transaction.id !== id);
-        
-        // Met à jour l'affichage
         calculerTotaux();
         afficherTransactions();
         sauvegarderDonnees();
@@ -102,7 +96,6 @@ function calculerTotaux() {
     state.revenus = 0;
     state.depenses = 0;
     
-    //  Parcours toutes les transactions
     state.transactions.forEach(transaction => {
         if (transaction.type === 'revenu') {
             state.revenus += transaction.montant;  
@@ -113,25 +106,57 @@ function calculerTotaux() {
     
     state.solde = state.revenus - state.depenses; 
     mettreAJourCartes(); 
+    mettreAJourGraphique(); 
 }
+
+// FONCTION POUR METTRE À JOUR LE GRAPHIQUE
+function mettreAJourGraphique() {
+    const total = state.revenus + state.depenses;
+    
+    let pourcentageRevenus, pourcentageDepenses;
+    
+    if (total > 0) {
+        pourcentageRevenus = (state.revenus / total) * 100;
+        pourcentageDepenses = (state.depenses / total) * 100;
+    } else {
+        pourcentageRevenus = 50;
+        pourcentageDepenses = 50;
+    }
+    
+    const barreRevenus = document.querySelector('.revenu-bar');
+    const barreDepenses = document.querySelector('.depense-bar');
+    
+    if (barreRevenus && barreDepenses) {
+        barreRevenus.style.width = `${pourcentageRevenus}%`;
+        barreDepenses.style.width = `${pourcentageDepenses}%`;
+        
+        barreRevenus.style.transition = 'width 0.8s ease';
+        barreDepenses.style.transition = 'width 0.8s ease';
+    }
+    
+    const valeurs = document.querySelectorAll('.bar-valeur');
+    if (valeurs.length >= 2) {
+        valeurs[0].textContent = `${state.revenus.toFixed(2)} DT`;
+        valeurs[1].textContent = `${state.depenses.toFixed(2)} DT`;
+    }
+}
+
 // MISE À JOUR DES CARTES
 function mettreAJourCartes() {
-    document.querySelector('.montant').textContent = `${state.solde} DT`;
-    document.querySelector('.revenus').textContent = `${state.revenus} DT`;
-    document.querySelector('.depenses').textContent = `${state.depenses} DT`;
+    document.querySelector('.montant').textContent = `${state.solde.toFixed(2)} DT`; 
+    document.querySelector('.revenus').textContent = `${state.revenus.toFixed(2)} DT`; 
+    document.querySelector('.depenses').textContent = `${state.depenses.toFixed(2)} DT`;
 }
 
 // AFFICHAGE DE L'HISTORIQUE DES TRANSACTIONS
 function afficherTransactions() {
     const container = document.querySelector('.transactions');
     
-    // Si liste vide
     if (state.transactions.length === 0) {
         container.innerHTML = '<p class="message-vide">Aucune transaction</p>';
         return;
     }
     
-    //  Crée le HTML pour chaque transaction
     container.innerHTML = state.transactions.map(transaction => `
         <div class="transaction ${transaction.type}">
             <div class="transaction-info">
@@ -140,7 +165,7 @@ function afficherTransactions() {
             </div>
             <div class="transaction-actions">
             <span class="transaction-montant ${transaction.type}">
-                ${transaction.type === 'revenu' ? '+' : '-'}${Math.abs(transaction.montant)} DT
+                ${transaction.type === 'revenu' ? '+' : '-'}${Math.abs(transaction.montant).toFixed(2)} DT
             </span>
                 <button class="btn-supprimer" onclick="supprimerTransaction(${transaction.id})">
                     ×

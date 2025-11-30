@@ -9,10 +9,11 @@
 
 <body>
 
-    <!-- Conteneur principal pour centrer et styliser le contenu -->
+    <!-- Conteneur principal -->
     <div class="container">
 
-        <!-- En-tête de la page -->
+        <!-- Colonne gauche : Formulaire et résumé -->
+        <div class="colonne-gauche">
         <header>
 
             <h1>Tableau de Bord Financier</h1>
@@ -62,16 +63,43 @@
             </form>
 
         </section>
+        </div>
 
-        <!-- Section de l'historique des transactions -->
-        <section class="historique">
+        <!-- Colonne droite : Graphique et historique -->
+        <div class="colonne-droite">
 
-            <h2>Historique</h2>
-            <div class="transactions">
+            <!-- Graphique de répartition revenus/dépenses -->
+            <div class="graphique-section">
+                <div class="graphique-titre">Répartition Revenus/Dépenses</div>
+                <div class="graphique-bars">
+                    <div class="bar-container">
+                        <div class="bar-label">Revenus</div>
+                        <div class="bar-background">
+                            <div class="bar-remplissage revenu-bar" style="width: 50%"></div>
+                        </div>
+                        <div class="bar-valeur">0 DT</div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-label">Dépenses</div>
+                        <div class="bar-background">
+                            <div class="bar-remplissage depense-bar" style="width: 50%"></div>
+                        </div>
+                        <div class="bar-valeur">0 DT</div>
+                    </div>
+                </div>
             </div>
 
-        </section>
+            <!-- Section de l'historique des transactions -->
+            <section class="historique">
 
+                <h2>Historique</h2>
+                <div class="transactions-container">
+                    <div class="transactions"></div>
+                </div>
+
+            </section>
+
+        </div>
     </div>
 
     <!-- Lien vers le fichier JavaScript -->
