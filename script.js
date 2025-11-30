@@ -119,28 +119,38 @@ function mettreAJourGraphique() {
         pourcentageRevenus = (state.revenus / total) * 100;
         pourcentageDepenses = (state.depenses / total) * 100;
     } else {
-        pourcentageRevenus = 50;
-        pourcentageDepenses = 50;
+        // Si pas de données, afficher 0%
+        pourcentageRevenus = 0;
+        pourcentageDepenses = 0;
     }
     
-    const barreRevenus = document.querySelector('.revenu-bar');
-    const barreDepenses = document.querySelector('.depense-bar');
+    // Mettre à jour TOUTES les barres de revenus
+    const barresRevenus = document.querySelectorAll('.revenu-bar');
+    barresRevenus.forEach(barre => {
+        barre.style.width = `${pourcentageRevenus}%`;
+    });
     
-    if (barreRevenus && barreDepenses) {
-        barreRevenus.style.width = `${pourcentageRevenus}%`;
-        barreDepenses.style.width = `${pourcentageDepenses}%`;
-        
-        barreRevenus.style.transition = 'width 0.8s ease';
-        barreDepenses.style.transition = 'width 0.8s ease';
-    }
+    // Mettre à jour TOUTES les barres de dépenses
+    const barresDepenses = document.querySelectorAll('.depense-bar');
+    barresDepenses.forEach(barre => {
+        barre.style.width = `${pourcentageDepenses}%`;
+    });
     
+    // Mettre à jour TOUTES les valeurs
     const valeurs = document.querySelectorAll('.bar-valeur');
-    if (valeurs.length >= 2) {
-        valeurs[0].textContent = `${state.revenus.toFixed(2)} DT`;
-        valeurs[1].textContent = `${state.depenses.toFixed(2)} DT`;
-    }
+    valeurs.forEach((valeur, index) => {
+        if (index % 2 === 0) {
+            // Index pairs = revenus
+            valeur.textContent = `${state.revenus.toFixed(2)} DT`;
+        } else {
+            // Index impairs = dépenses
+            valeur.textContent = `${state.depenses.toFixed(2)} DT`;
+        }
+    });
+    
+    // Mettre à jour les cartes de résumé
+    mettreAJourCartes();
 }
-
 // MISE À JOUR DES CARTES
 function mettreAJourCartes() {
     document.querySelector('.montant').textContent = `${state.solde.toFixed(2)} DT`; 
